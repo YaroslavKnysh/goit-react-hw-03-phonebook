@@ -30,6 +30,23 @@ class Phonebook extends Component {
       contacts: this.state.contacts.filter(item => item.id !== id),
     });
   }
+  componentDidMount() {
+    let newContacts = localStorage.getItem('newContacts');
+    const parsedContacts = JSON.parse(newContacts);
+    if (parsedContacts) {
+      this.setState({ contacts: parsedContacts });
+    }
+    // let contacts = localStorage.getItem('newContacts');
+    // contacts = JSON.parse(contacts);
+    // if (contacts) {
+    //   this.setState({ contacts });
+    // }
+  }
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.contacts !== prevState.contacts) {
+      localStorage.setItem('newContacts', JSON.stringify(this.state.contacts));
+    }
+  }
   render() {
     return (
       <div>
